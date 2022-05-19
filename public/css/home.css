@@ -1,0 +1,61 @@
+.carousel {
+    margin-bottom: 4rem;
+}
+
+.carousel-caption {
+    bottom: 3rem;
+    z-index: 10;
+}
+
+.carousel-item {
+    height: 32rem;
+    overflow: hidden;
+}
+
+.carousel-item > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    margin: -160px 0 0 0;
+}
+
+.marketing .col-lg-4 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.marketing h2 {
+    font-weight: 400;
+}
+
+
+.featurette-divider {
+    margin: 5rem 0;
+}
+
+.featurette-heading {
+    font-weight: 300;
+    line-height: 1;
+}
+
+.last {
+    margin: 5rem 0 1rem 0;
+}
+
+@media (min-width: 40em) {
+    .carousel-caption p {
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+
+    .featurette-heading {
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 62em) {
+    .featurette-heading {
+        margin-top: 7rem;
+    }
+}

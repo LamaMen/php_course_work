@@ -1,0 +1,13 @@
+$primary: #B4DD7F;
+$danger: #F4816F;
+$btn-link-color: #FFFFFF;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+.btn-primary {
+    color: #FFFFFF;
+}
+
+.btn-rounded {
+    border-radius: 16px;
+}
