@@ -1,0 +1,39 @@
+.carousel {
+    margin-bottom: 4rem;
+}
+
+.carousel-caption {
+    bottom: 8rem;
+    z-index: 10;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.carousel-caption > p, .carousel-caption > h1 {
+    color: black;
+}
+.e-date {
+    color: #3B3F41 !important;
+}
+
+.carousel-item {
+    height: 40rem;
+    overflow: hidden;
+}
+
+.carousel-item > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    margin: -160px 0 0 0;
+}
+
+@media (min-width: 40em) {
+    .carousel-caption p {
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
+        line-height: 1.4;
+    }
+}

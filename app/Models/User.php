@@ -57,4 +57,9 @@ class User
         $number = preg_match('@\d@', $this->password);
         return $uppercase and $lowercase and $number and strlen($this->password) >= 4;
     }
+
+    public function fullName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
 }
