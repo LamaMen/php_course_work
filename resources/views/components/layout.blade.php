@@ -8,7 +8,7 @@
     <title>{{ $title }}</title>
 
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/shared/navbar.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/shared/layout.css') }}" rel="stylesheet">
     {{ $styles ?? '' }}
 
 </head>
@@ -26,6 +26,7 @@
 
 <footer class="footer">
     <div class="container">
+        <hr class="footer-divider">
         <p>&copy; 2022 GreatLuking</p>
     </div>
 </footer>

@@ -1,47 +1,29 @@
-<div id="myCarousel" class="excursion slide" data-bs-ride="carousel">
-    @if (count($places) > 1)
-        <div class="carousel-indicators">
-            @for ($i = 0; $i < count($places); $i++)
-                <button type="button" data-bs-target="#myCarousel"
-                        @if ($i == 1) class="active" @endif
-                        data-bs-slide-to="{{ $i }}"
-                        aria-label="Slide {{ $i }}"></button>
-            @endfor
-        </div>
-    @endif
-
-    <div class="carousel-inner">
-        @for ($i = 0; $i < count($places); $i++)
-            <div class="carousel-item @if ($i == 0) active @endif">
-                <img alt="" src="{{ $places[$i]->photos['0'] ?? '' }}"/>
-
-                <div class="container">
-                    <div class="carousel-caption text-start col-lg-4 col-8">
-                        <h1>{{ $places[$i]->title }}
-                            @if ($places[$i]->rating != 0)
-                                <span class="position-absolute top-0 start-100
-                                    translate-middle badge rounded-pill bg-danger">★{{ $places[$i]->rating }}</span>
-                            @endif
-                        </h1>
-                        <p class="d-none d-sm-block mb-1">{{ mb_substr($places[$i]->description, 0, 150) }} ...</p>
-                        @if (count($places[$i]->dates) > 0)
-                            <p class="e-date mb-1">Когда: {{ $places[$i]->dates[0]->format('d.m h:i') }}</p>
-                        @endif
-                        <p><a class="btn btn-lg btn-primary mt-1" href="#">Подробнее</a></p>
+@if (count($excursions) > 0)
+    <div class="excursion">
+        <img class="excursion-image" alt="" src="{{ $excursions[0]->photos['0'] ?? '' }}"/>
+        <div class="container">
+            <div class="excursion-body text-start">
+                <h1>{{ $excursions[0]->title }}
+                    @if ($excursions[0]->rating != 0)
+                        <span class="position-absolute top-0 start-100
+                                        translate-middle badge rounded-pill bg-danger">★{{ $excursions[0]->rating }}</span>
+                    @endif
+                </h1>
+                <p class="excursion-description d-none d-sm-block mb-2 lead">
+                    @if (strlen($excursions[0]->description) < 150)
+                        {{ $excursions[0]->description }}
+                    @else
+                        {{ mb_substr($excursions[0]->description, 0, 150) }} ...
+                    @endif
+                </p>
+                <div class="d-flex justify-content-between align-items-baseline pe-3">
+                    <div class="btn-group">
+                        <a class="btn btn-lg btn-primary mt-1" href="#">Подробнее</a>
                     </div>
+                    <p class="text-muted lead d-none d-lg-block mb-0">Ближайшая
+                        дата: {{ $excursions[0]->dates[0]->format('d.m h:i') }}</p>
                 </div>
             </div>
-        @endfor
+        </div>
     </div>
-
-    @if (count($places) > 1)
-        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    @endif
-</div>
+@endif

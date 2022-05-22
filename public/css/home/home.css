@@ -1,43 +1,36 @@
 /* Excursion styles */
 
-.carousel {
+.excursion {
     margin-bottom: 4rem;
+    overflow: hidden;
+    position: relative;
+    height: 40rem;
 }
 
-.carousel-caption {
+.excursion-image {
+    position: absolute;
+    top: -160px;
+    left: 0;
+    min-width: 100%;
+}
+
+.excursion-body {
+    position: absolute;
+    top: 30%;
+    left: 20%;
+    width: 50%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.excursion-title {
     bottom: 8rem;
     z-index: 10;
     background-color: white;
     border-radius: 10px;
     padding: 20px;
-}
-
-.carousel-caption > p, .carousel-caption > h1 {
-    color: black;
-}
-.e-date {
-    color: #3B3F41 !important;
-}
-
-.carousel-item {
-    height: 40rem;
-    overflow: hidden;
-}
-
-.carousel-item > img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    margin: -160px 0 0 0;
-}
-
-@media (min-width: 40em) {
-.carousel-caption p {
-    margin-bottom: 1.25rem;
-    font-size: 1.25rem;
-    line-height: 1.4;
-}
 }
 
 /* Places styles */
@@ -53,10 +46,6 @@
 
 .places-divider {
     margin: 5rem 0;
-}
-
-.places-divider-last {
-    margin: 5rem 0 1rem 0;
 }
 
 .place-heading {

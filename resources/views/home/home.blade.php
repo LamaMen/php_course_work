@@ -3,6 +3,6 @@
         <link href="{{ asset('css/home/home.css') }}" rel="stylesheet">
     </x-slot>
 
-    @include('home.excursions', ['places' => $excursions])
+    @include('home.excursions', ['excursions' => $excursions])
     @include('home.places', ['places' => $places])
 </x-layout>

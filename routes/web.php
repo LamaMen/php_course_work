@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExcursionController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,5 +16,5 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
     Route::view('/places', 'places.places');
-    Route::view('/excursions', 'excursions.excursions');
+    Route::get('/excursions/{page?}', [ExcursionController::class, 'allExcursions']);
 });

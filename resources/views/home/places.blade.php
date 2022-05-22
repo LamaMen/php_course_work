@@ -16,7 +16,10 @@
                 <img class="feature-image img-fluid place-image" alt="" src="{{ $places[$i]->photos['0'] ?? '' }}"/>
             </div>
         </div>
-        <hr class="@if ($i == count($places) - 1) places-divider-last @else places-divider @endif">
+
+        @if ($i != count($places) - 1)
+            <hr class="places-divider">
+        @endif
     @endfor
 
 </div>

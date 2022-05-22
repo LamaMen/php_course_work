@@ -10,10 +10,12 @@ CREATE TABLE PLACE
 
 CREATE TABLE EXCURSION
 (
-    id            INT PRIMARY KEY,
-    destination   VARCHAR(255) NOT NULL,
-    peopleNumber  INT          NOT NULL,
-    price         INT          NOT NULL,
+    id           INT PRIMARY KEY,
+    destination  VARCHAR(255) NOT NULL,
+    peopleNumber INT          NOT NULL,
+    duration     TIME         NOT NULL,
+    adultPrice   INT          NOT NULL,
+    childPrice   INT          NULL,
     FOREIGN KEY (id) REFERENCES PLACE (id)
 );
 
