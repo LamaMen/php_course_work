@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\RedirectResponse;
+
 
 class AuthController extends Controller
 {
@@ -32,7 +34,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
         $request->session()->put('user', $user);
-        return redirect()->route('home');
+        return $this->redirectBack($request->session());
     }
 
     public function singUp(Request $request): RedirectResponse
@@ -51,7 +53,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
         $request->session()->put('user', $userWithId);
-        return redirect()->route('home');
+        return $this->redirectBack($request->session());
     }
 
     public function logout(Request $request): RedirectResponse
@@ -60,6 +62,17 @@ class AuthController extends Controller
         if ($session->has('user')) {
             $session->remove('user');
             $session->regenerate();
+        }
+
+        return redirect()->route('home');
+    }
+
+    private function redirectBack(Session $session): RedirectResponse
+    {
+        if ($session->has('lastPath')) {
+            $path = $session->get('lastPath');
+            $session->remove('lastPath');
+            return redirect($path);
         }
 
         return redirect()->route('home');

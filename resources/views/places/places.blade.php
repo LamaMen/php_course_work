@@ -9,19 +9,16 @@
 
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('css/shared/navbar.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/home/excursion.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/home/place.css') }}" rel="stylesheet">
 
 </head>
 <body>
 
 <header>
-    <x-shared.navbar current="0"></x-shared.navbar>
+    <x-shared.navbar current="1"></x-shared.navbar>
 </header>
 
 <main>
-    @include('home.excursions', ['places' => $excursions])
-    @include('home.places', ['places' => $places])
+    <h1 class="mt-5 display-1">Protected Screen Places</h1>
 </main>
 
 <footer class="footer">

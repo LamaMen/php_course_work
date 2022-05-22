@@ -21,7 +21,7 @@ class UserRepository
             $query->bindValue(':email', $user->email);
             $query->bindValue(':passwd', $user->password);
             $query->bindValue(':role', $user->role);
-            $query->execute();
+            if (!$query->execute()) return null;
             $id = $db->lastInsertId();
             $user->id = $id;
             return $user;

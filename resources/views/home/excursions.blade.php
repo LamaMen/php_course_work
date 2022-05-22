@@ -24,8 +24,10 @@
                             @endif
                         </h1>
                         <p class="d-none d-sm-block mb-1">{{ mb_substr($places[$i]->description, 0, 150) }} ...</p>
-                        <p class="e-date">Когда: {{ $places[$i]->dateTime->format('d.m h:i') }}</p>
-                        <p><a class="btn btn-lg btn-primary" href="#">Подробнее</a></p>
+                        @if (count($places[$i]->dates) > 0)
+                            <p class="e-date mb-1">Когда: {{ $places[$i]->dates[0]->format('d.m h:i') }}</p>
+                        @endif
+                        <p><a class="btn btn-lg btn-primary mt-1" href="#">Подробнее</a></p>
                     </div>
                 </div>
             </div>

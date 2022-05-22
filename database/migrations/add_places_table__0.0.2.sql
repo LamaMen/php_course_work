@@ -4,21 +4,29 @@ CREATE TABLE PLACE
     title       VARCHAR(255) NOT NULL,
     description TEXT         NOT NULL,
     ownerId     INT          NOT NULL,
+    isArchive   BOOL         NOT NULL DEFAULT FALSE,
     FOREIGN KEY (ownerId) REFERENCES USERS (id)
 );
 
 CREATE TABLE EXCURSION
 (
     id            INT PRIMARY KEY,
-    excursionDate DATETIME     NOT NULL,
     destination   VARCHAR(255) NOT NULL,
     peopleNumber  INT          NOT NULL,
     price         INT          NOT NULL,
     FOREIGN KEY (id) REFERENCES PLACE (id)
 );
 
-CREATE VIEW ORDINARY_PLACE AS
-SELECT id, title, description, ownerId, get_place_rating(id) as rating
+CREATE TABLE DATES
+(
+    id            INT PRIMARY KEY AUTO_INCREMENT,
+    excursionDate DATETIME NOT NULL,
+    excursionId   INT      NOT NULL,
+    FOREIGN KEY (excursionId) REFERENCES EXCURSION (id)
+);
+
+CREATE VIEW ORDINARY_PLACE (id, title, description, ownerId, isArchive, rating) AS
+SELECT id, title, description, ownerId, isArchive, get_place_rating(id)
 FROM PLACE p
 WHERE id not in (SELECT id FROM EXCURSION);
 

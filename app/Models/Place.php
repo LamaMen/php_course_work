@@ -9,28 +9,32 @@ class Place
     public string $description;
     public float $rating;
     public array $photos;
+    public bool $isArchive;
 
     function __construct(int    $id,
                          string $title,
                          string $description,
                          float  $rating,
+                         bool   $isArchive,
                          array  $photos)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
         $this->rating = $rating;
+        $this->isArchive = $isArchive;
         $this->photos = $photos;
     }
 
-    static function fromDB(mixed $resultRow, array $photos): Place
+    static function fromDB(mixed $resultRow, array $params): Place
     {
         return new self(
             $resultRow['id'],
             $resultRow['title'],
             $resultRow['description'],
             $resultRow['rating'],
-            $photos,
+            $resultRow['isArchive'],
+            $params['photos'],
         );
     }
 }

@@ -20,6 +20,17 @@
     line-height: 1;
 }
 
+.place-rating {
+    font-size: 1rem;
+    vertical-align: top;
+}
+
+.place-image {
+    border-radius: 10px;
+    width: 500px;
+    max-height: 500px;
+}
+
 @media (min-width: 40em) {
     .place-heading {
         font-size: 50px;

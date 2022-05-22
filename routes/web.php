@@ -12,3 +12,8 @@ Route::view('/sing_up', 'auth.sing_up');
 Route::post('/sing_in', [AuthController::class, 'singIn']);
 Route::post('/sing_up', [AuthController::class, 'singUp']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::view('/places', 'places.places');
+    Route::view('/excursions', 'excursions.excursions');
+});

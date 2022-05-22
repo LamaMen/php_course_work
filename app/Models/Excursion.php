@@ -2,53 +2,44 @@
 
 namespace App\Models;
 
-use DateTime;
-
-class Excursion
+class Excursion extends Place
 {
-    public int $id;
-    public string $title;
-    public string $description;
-    public float $rating;
-    public DateTime $dateTime;
+    public array $dates;
     public string $destination;
     public int $peopleNumber;
     public int $price;
-    public array $photos;
 
-    function __construct(int      $id,
-                         string   $title,
-                         string   $description,
-                         float    $rating,
-                         string $dateTime,
-                         string   $destination,
-                         int      $peopleNumber,
-                         int      $price,
-                         array    $photos)
+    function __construct(int    $id,
+                         string $title,
+                         string $description,
+                         float  $rating,
+                         array  $dates,
+                         string $destination,
+                         int    $peopleNumber,
+                         int    $price,
+                         bool   $isArchive,
+                         array  $photos)
     {
-        $this->id = $id;
-        $this->title = $title;
-        $this->description = $description;
-        $this->rating = $rating;
-        $this->photos = $photos;
-        $this->dateTime = DateTime::createFromFormat('Y-m-d H:i:s', $dateTime);
+        $this->dates = $dates;
         $this->peopleNumber = $peopleNumber;
         $this->price = $price;
         $this->destination = $destination;
+        parent::__construct($id, $title, $description, $rating, $isArchive, $photos);
     }
 
-    static function fromDB(mixed $resultRow, array $photos): Excursion
+    static function fromDB(mixed $resultRow, array $params): Excursion
     {
         return new self(
             $resultRow['id'],
             $resultRow['title'],
             $resultRow['description'],
             $resultRow['rating'],
-            $resultRow['excursionDate'],
+            $params['dates'],
             $resultRow['destination'],
             $resultRow['peopleNumber'],
             $resultRow['price'],
-            $photos,
+            $resultRow['isArchive'],
+            $params['photos'],
         );
     }
 }
