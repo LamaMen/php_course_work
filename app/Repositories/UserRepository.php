@@ -22,12 +22,27 @@ class UserRepository
             $query->bindValue(':passwd', $user->password);
             $query->bindValue(':role', $user->role);
             if (!$query->execute()) return null;
+
             $id = $db->lastInsertId();
+            if ($user->role == 'instructor') $this->addInstructor($id);
+
             $user->id = $id;
             return $user;
         } catch (PDOException $e) {
             return null;
         }
+    }
+
+    private function addInstructor(int $userId): void
+    {
+        // TODO - add specialization
+        $db = DB::connection()->getPdo();
+        $query = $db->prepare(
+            "INSERT INTO INSTRUCTOR(user_id, surname, specialization_id)
+            VALUES (:userId, null, 1)"
+        );
+        $query->bindValue(':userId', $userId);
+        $query->execute();
     }
 
     public function getByEmail(string $email): User|null

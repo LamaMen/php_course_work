@@ -13,7 +13,7 @@
                 <p><a class="btn btn-lg btn-primary" href="#">Подробнее</a></p>
             </div>
             <div class="col-md-5 @if ($i % 2 == 1) order-md-1 @endif">
-                <img class="feature-image img-fluid place-image" alt="" src="{{ $places[$i]->photos['0'] ?? '' }}"/>
+                <img class="feature-image img-fluid place-image" alt="" src="{{ $places[$i]->photo }}"/>
             </div>
         </div>
 

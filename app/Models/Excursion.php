@@ -6,39 +6,29 @@ use DateTime;
 
 class Excursion extends Place
 {
-    public array $dates;
-    public string $destination;
-    public int $peopleNumber;
-    public int $adultPrice;
+    public string $address;
     public DateTime $duration;
-    public int|null $childPrice;
+    public int $price;
 
-    function __construct(int      $id,
-                         string   $title,
-                         string   $description,
-                         float    $rating,
-                         array    $dates,
-                         string   $destination,
-                         int      $peopleNumber,
-                         int      $adultPrice,
-                         int|null $childPrice,
-                         string   $duration,
-                         bool     $isArchive,
-                         array    $photos)
+    function __construct(int    $id,
+                         string $title,
+                         string $description,
+                         string $address,
+                         int    $price,
+                         string $duration,
+                         float  $rating,
+                         string|null $photo)
     {
-        $this->dates = $dates;
-        $this->peopleNumber = $peopleNumber;
-        $this->adultPrice = $adultPrice;
-        $this->childPrice = $childPrice;
-        $this->destination = $destination;
+        $this->address = $address;
+        $this->price = $price;
         $this->duration = DateTime::createFromFormat('H:i:s', $duration);
-        parent::__construct($id, $title, $description, $rating, $isArchive, $photos);
+        parent::__construct($id, $title, $description, $rating, $photo);
     }
 
     function getDuration(): string
     {
-        $hours = (int) $this->duration->format('H');
-        $minutes = (int) $this->duration->format('i');
+        $hours = (int)$this->duration->format('H');
+        $minutes = (int)$this->duration->format('i');
         if ($hours == 0) {
             return $minutes . ' мин';
         } elseif ($minutes == 0) {
@@ -48,21 +38,17 @@ class Excursion extends Place
         }
     }
 
-    static function fromDB(mixed $resultRow, array $params): Excursion
+    static function fromDB(mixed $resultRow): Excursion
     {
         return new self(
             $resultRow['id'],
             $resultRow['title'],
             $resultRow['description'],
-            $resultRow['rating'],
-            $params['dates'],
-            $resultRow['destination'],
-            $resultRow['peopleNumber'],
-            $resultRow['adultPrice'],
-            $resultRow['childPrice'],
+            $resultRow['address'],
+            $resultRow['price'],
             $resultRow['duration'],
-            $resultRow['isArchive'],
-            $params['photos'],
+            $resultRow['rating'],
+            $resultRow['photo'],
         );
     }
 }

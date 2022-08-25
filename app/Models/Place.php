@@ -2,39 +2,25 @@
 
 namespace App\Models;
 
+// TODO - Must contain owner
 class Place
 {
     public int $id;
     public string $title;
     public string $description;
     public float $rating;
-    public array $photos;
-    public bool $isArchive;
+    public string $photo;
 
-    function __construct(int    $id,
-                         string $title,
-                         string $description,
-                         float  $rating,
-                         bool   $isArchive,
-                         array  $photos)
+    function __construct(int         $id,
+                         string      $title,
+                         string      $description,
+                         float       $rating,
+                         string|null $photo)
     {
         $this->id = $id;
         $this->title = $title;
         $this->description = $description;
         $this->rating = $rating;
-        $this->isArchive = $isArchive;
-        $this->photos = $photos;
-    }
-
-    static function fromDB(mixed $resultRow, array $params): Place
-    {
-        return new self(
-            $resultRow['id'],
-            $resultRow['title'],
-            $resultRow['description'],
-            $resultRow['rating'],
-            $resultRow['isArchive'],
-            $params['photos'],
-        );
+        $this->photo = $photo ?? 'https://via.placeholder.com/640x360?text=GreatLuking';
     }
 }

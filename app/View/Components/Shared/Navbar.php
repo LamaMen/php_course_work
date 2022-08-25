@@ -2,36 +2,24 @@
 
 namespace App\View\Components\Shared;
 
-use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class Navbar extends Component
 {
+    public int $current;
     public array $routes = [
         ['name' => 'Главная', 'url' => '/'],
-        ['name' => 'Популярные места', 'url' => '/places'],
+        ['name' => 'Достопримечательности', 'url' => '/showplaces'],
         ['name' => 'Экскурсии', 'url' => '/excursions'],
     ];
 
-    public int $current;
-
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
     public function __construct($current)
     {
         $this->current = $current;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return View|Closure|string
-     */
-    public function render(): View|string|Closure
+    public function render(): View
     {
         return view('components.shared.navbar');
     }

@@ -17,7 +17,7 @@ class HomeController extends Controller
 
     public function __invoke(): View
     {
-        $places = $this->repository->getPopularPlaces(3);
+        $places = $this->repository->getShowplaces(3);
         $excursions = $this->repository->getPopularExcursions(1);
         return view('home.home', ['places' => $places, 'excursions' => $excursions]);
     }

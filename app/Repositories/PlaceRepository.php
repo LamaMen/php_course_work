@@ -3,51 +3,51 @@
 namespace App\Repositories;
 
 use App\Models\Excursion;
-use App\Models\Place;
-use DateTime;
+use App\Models\Showplace;
 use Illuminate\Support\Facades\DB;
 
 class PlaceRepository
 {
-    function getPlacesCount(bool $isAll = false): int
+    public function getShowplacesCount(): int
     {
         $pdo = DB::connection()->getPdo();
         $query = $pdo->prepare(
             "SELECT Count(*) as count
-                    FROM ORDINARY_PLACE
-                    WHERE isArchive = :isAll");
+                    FROM SHOWPLACE");
 
-        $query->bindValue(':isAll', $isAll);
         $query->execute();
         return $query->fetch()['count'];
     }
 
-    function getExcursionsCount(bool $isAll = false): int
+    public function getExcursionsCount(): int
     {
         $pdo = DB::connection()->getPdo();
         $query = $pdo->prepare(
             "SELECT Count(*) as count
-                    FROM EXCURSION e INNER JOIN PLACE p on e.id = p.id
-                    WHERE isArchive = :isAll");
+                    FROM EXCURSION e");
 
-        $query->bindValue(':isAll', $isAll);
         $query->execute();
         return $query->fetch()['count'];
     }
 
-    function getPopularPlaces(int $count, int $page = 1, bool $isAll = false): array
+    public function getShowplaces(int $count, int $page = 1): array
     {
         $pdo = DB::connection()->getPdo();
         $query = $pdo->prepare(
-            "SELECT id, title, description, isArchive, rating
-                    FROM ORDINARY_PLACE
-                    WHERE isArchive = :isAll
+            "SELECT p.id as id,
+                    p.title as title,
+                    p.description as description,
+                    get_place_rating(p.id) as rating,
+                    s.address as address,
+                    i.photo as photo
+                    FROM SHOWPLACE s
+                        INNER JOIN PLACE p on s.place_id = p.id
+                        INNER JOIN PLACE_IMAGE i on p.id = i.place_id
                     ORDER BY rating DESC
                     LIMIT :from, :limit");
 
         $query->bindValue(':limit', $count);
         $query->bindValue(':from', $this->getFromIndex($count, $page));
-        $query->bindValue(':isAll', $isAll);
         $query->execute();
         $places = $query->fetchAll();
         if (!$places) {
@@ -55,32 +55,30 @@ class PlaceRepository
         }
 
         return array_map(function ($place) {
-            return Place::fromDB($place, ['photos' => $this->getPhotoByPlace($place['id'])]);
+            return Showplace::fromDB($place);
         }, $places);
     }
 
-    public function getPopularExcursions(int $count, int $page = 1, bool $isAll = false): array
+    public function getPopularExcursions(int $count, int $page = 1): array
     {
         $pdo = DB::connection()->getPdo();
         $query = $pdo->prepare(
             "SELECT e.id as id,
                     p.title as title,
                     p.description as description,
-                    e.destination as destination,
-                    e.peopleNumber as peopleNumber,
-                    p.isArchive as isArchive,
-                    e.adultPrice as adultPrice,
+                    e.address as address,
+                    e.price as price,
                     e.duration as duration,
-                    e.childPrice as childPrice,
-                    get_place_rating(e.id) as rating
-                    FROM EXCURSION e INNER JOIN PLACE p on e.id = p.id
-                    WHERE isArchive = :isAll
+                    get_place_rating(p.id) as rating,
+                    i.photo as photo
+                    FROM EXCURSION e
+                        INNER JOIN PLACE p on e.place_id = p.id
+                        LEFT JOIN PLACE_IMAGE i on p.id = i.place_id
                     ORDER BY rating DESC
                     LIMIT :from, :limit");
 
         $query->bindValue(':limit', $count);
         $query->bindValue(':from', $this->getFromIndex($count, $page));
-        $query->bindValue(':isAll', $isAll);
         $query->execute();
         $places = $query->fetchAll();
 
@@ -88,59 +86,13 @@ class PlaceRepository
             return array();
         }
 
-        return array_map(function ($place) use ($isAll) {
-            return Excursion::fromDB($place, [
-                'photos' => $this->getPhotoByPlace($place['id']),
-                'dates' => $this->getExcursionDates($place['id'], $isAll),
-            ]);
+        return array_map(function ($place) {
+            return Excursion::fromDB($place);
         }, $places);
     }
 
     private function getFromIndex(int $count, int $page): int
     {
         return ($page - 1) * $count;
-    }
-
-    private function getPhotoByPlace(int $id): array
-    {
-        $pdo = DB::connection()->getPdo();
-        $query = $pdo->prepare("SELECT path FROM IMAGE WHERE placeId = :id");
-        $query->bindValue(':id', $id);
-        $query->execute();
-        $photos = $query->fetchAll();
-
-        if (!$photos) {
-            return array();
-        }
-
-        return array_map(function ($r) {
-            return $r['path'];
-        }, $photos);
-    }
-
-    private function getExcursionDates(int $id, bool $isAll): array
-    {
-        $pdo = DB::connection()->getPdo();
-        $query = $pdo->prepare("SELECT excursionDate
-                                        FROM DATES
-                                        WHERE excursionId = :id AND excursionDate > :date
-                                        ORDER BY 1");
-        $query->bindValue(':id', $id);
-        if ($isAll) {
-            $query->bindValue(':date', '0001-01-01 00:00:00');
-        } else {
-            $query->bindValue(':date', date("Y-m-d H:i:s"));
-        }
-
-        $query->execute();
-        $photos = $query->fetchAll();
-
-        if (!$photos) {
-            return array();
-        }
-
-        return array_map(function ($r) {
-            return DateTime::createFromFormat('Y-m-d H:i:s', $r['excursionDate']);
-        }, $photos);
     }
 }

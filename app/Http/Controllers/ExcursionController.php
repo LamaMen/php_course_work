@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ExcursionPageModel;
+use App\Models\PageWithItemsModel;
 use App\Repositories\PlaceRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +26,7 @@ class ExcursionController extends Controller
         }
 
         $excursions = $this->repository->getPopularExcursions($this->countOnPage, $page);
-        $model = new ExcursionPageModel($excursions, $page, $maxPage);
+        $model = new PageWithItemsModel($excursions, $page, $maxPage);
         return view('excursions.excursions', ['model' => $model]);
     }
 }

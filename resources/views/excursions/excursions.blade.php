@@ -13,8 +13,11 @@
         </div>
 
         <div>
-            @include('excursions.list')
+            @include('excursions.list', ['excursions' => $model->items])
         </div>
 
+        <div class="album px-5">
+            <x-shared.pages-nav actual="{{ $model->actual }}" count="{{ $model->count }}"></x-shared.pages-nav>
+        </div>
     </div>
 </x-layout>

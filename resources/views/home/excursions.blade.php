@@ -1,6 +1,6 @@
 @if (count($excursions) > 0)
     <div class="excursion">
-        <img class="excursion-image" alt="" src="{{ $excursions[0]->photos['0'] ?? '' }}"/>
+        <img class="excursion-image" alt="" src="{{ $excursions[0]->photo }}"/>
         <div class="container">
             <div class="excursion-body text-start">
                 <h1>{{ $excursions[0]->title }}
@@ -20,8 +20,6 @@
                     <div class="btn-group">
                         <a class="btn btn-lg btn-primary mt-1" href="#">Подробнее</a>
                     </div>
-                    <p class="text-muted lead d-none d-lg-block mb-0">Ближайшая
-                        дата: {{ $excursions[0]->dates[0]->format('d.m h:i') }}</p>
                 </div>
             </div>
         </div>
