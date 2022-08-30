@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExcursionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShowplacesController;
+use App\Http\Controllers\TestRestController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,6 +19,15 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
     Route::view('/places', 'places.places');
+
     Route::get('/excursions/{page?}', [ExcursionController::class, 'allExcursions']);
+    Route::get('/excursion/{id}', [ExcursionController::class, 'excursion']);
+
     Route::get('/showplaces/{page?}', [ShowplacesController::class, 'allShowplaces']);
+    Route::get('/showplace/{id}', [ShowplacesController::class, 'showplace']);
+
+
+    Route::post('/comments/create', [CommentController::class, 'create']);
 });
+
+Route::apiResource('/api/test', TestRestController::class);

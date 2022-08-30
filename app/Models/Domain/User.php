@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Domain;
 
 class User
 {
@@ -24,6 +24,18 @@ class User
         $this->email = $email;
         $this->password = $password;
         $this->role = $role;
+    }
+
+    public static function onlyId(int $id): User
+    {
+        return new self(
+            $id,
+            '',
+            '',
+            '',
+            '',
+            ''
+        );
     }
 
     public static function fromForm(mixed $form): User

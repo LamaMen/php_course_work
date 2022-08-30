@@ -5,8 +5,10 @@
             <div class="excursion-body text-start">
                 <h1>{{ $excursions[0]->title }}
                     @if ($excursions[0]->rating != 0)
-                        <span class="position-absolute top-0 start-100
-                                        translate-middle badge rounded-pill bg-danger">★{{ $excursions[0]->rating }}</span>
+                        <x-places.rating
+                            class="position-absolute top-0 start-100 translate-middle"
+                            rating="{{ $excursions[0]->rating }}">
+                        </x-places.rating>
                     @endif
                 </h1>
                 <p class="excursion-description d-none d-sm-block mb-2 lead">
@@ -18,7 +20,7 @@
                 </p>
                 <div class="d-flex justify-content-between align-items-baseline pe-3">
                     <div class="btn-group">
-                        <a class="btn btn-lg btn-primary mt-1" href="#">Подробнее</a>
+                        <a class="btn btn-lg btn-primary mt-1" href="/excursion/{{ $excursions[0]->id }}">Подробнее</a>
                     </div>
                 </div>
             </div>

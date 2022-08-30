@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container">
 
         <a class="navbar-brand" href="#">

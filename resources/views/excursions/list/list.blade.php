@@ -8,9 +8,9 @@
 
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-between align-items-center">
-                            <a href="#" class="text"><b>{{ $excursion->title }}</b></a>
+                            <a href="/excursion/{{ $excursion->id }}" class="text"><b>{{ $excursion->title }}</b></a>
                             @if($excursion->rating > 0)
-                                <span class="badge rounded-pill bg-danger">★{{ $excursion->rating }}</span>
+                                <x-places.rating rating="{{ $excursion->rating }}"></x-places.rating>
                             @endif
                         </div>
                         <div style="height: 130px;">

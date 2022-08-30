@@ -1,6 +1,6 @@
 <x-layout pageIndex="1" title="Достопримечательности">
     <div class="container">
-        <div class="px-4 pt-5 my-5 text-start border-bottom">
+        <div class="px-4 my-3 text-start border-bottom">
             <h1 class="display-4 fw-bold">Достопримечательности</h1>
             <div class="col-lg-8">
                 <p class="lead mb-2">
@@ -15,7 +15,7 @@
         </div>
 
         <div>
-            @include('showplaces.list', ['showplaces' => $model->items])
+            @include('showplaces.list.list', ['showplaces' => $model->items])
         </div>
 
         <div class="album px-5">

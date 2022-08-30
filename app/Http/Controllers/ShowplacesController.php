@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PageWithItemsModel;
+use App\Models\VewModels\PageWithItemsModel;
 use App\Repositories\PlaceRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -27,6 +27,17 @@ class ShowplacesController extends Controller
 
         $showplaces = $this->repository->getShowplaces($this->countOnPage, $page);
         $model = new PageWithItemsModel($showplaces, $page, $maxPage);
-        return view('showplaces.showplaces', ['model' => $model]);
+        return view('showplaces.list.showplaces', ['model' => $model]);
+    }
+
+
+    public function showplace(int $id): View
+    {
+        $excursion = $this->repository->getShowplace($id);
+        if ($excursion == null) {
+            return view('showplaces.item.showplace-not-found');
+        }
+
+        return view('showplaces.item.showplace', ['showplace' => $excursion]);
     }
 }

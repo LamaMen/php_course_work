@@ -1,6 +1,6 @@
 <x-layout pageIndex="2" title="Экскурсии">
     <div class="container">
-        <div class="px-4 pt-5 my-5 text-start border-bottom">
+        <div class="px-4 my-3 text-start border-bottom">
             <h1 class="display-4 fw-bold">Популярные экскурсии</h1>
             <div class="col-lg-8">
                 <p class="lead mb-2">
@@ -13,7 +13,7 @@
         </div>
 
         <div>
-            @include('excursions.list', ['excursions' => $model->items])
+            @include('excursions.list.list', ['excursions' => $model->items])
         </div>
 
         <div class="album px-5">

@@ -2,7 +2,7 @@
 
 namespace App\View\Components\Shared;
 
-use App\Models\User;
+use App\Models\Domain\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -13,14 +13,6 @@ class LoginButton extends Component
 {
     public User|null $user;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Get the view / contents that represent the component.

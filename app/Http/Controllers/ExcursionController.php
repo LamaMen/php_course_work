@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PageWithItemsModel;
+use App\Models\VewModels\PageWithItemsModel;
 use App\Repositories\PlaceRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -27,6 +27,16 @@ class ExcursionController extends Controller
 
         $excursions = $this->repository->getPopularExcursions($this->countOnPage, $page);
         $model = new PageWithItemsModel($excursions, $page, $maxPage);
-        return view('excursions.excursions', ['model' => $model]);
+        return view('excursions.list.excursions', ['model' => $model]);
+    }
+
+    public function excursion(int $id): View
+    {
+        $excursion = $this->repository->getExcursion($id);
+        if ($excursion == null) {
+            return view('excursions.item.excursion-not-found');
+        }
+
+        return view('excursions.item.excursion', ['excursion' => $excursion]);
     }
 }

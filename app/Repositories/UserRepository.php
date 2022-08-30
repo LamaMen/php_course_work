@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
+use App\Models\Domain\User;
 use Illuminate\Support\Facades\DB;
 use PDOException;
 
@@ -35,7 +35,7 @@ class UserRepository
 
     private function addInstructor(int $userId): void
     {
-        // TODO - add specialization
+        // TODO - add specialization and surname
         $db = DB::connection()->getPdo();
         $query = $db->prepare(
             "INSERT INTO INSTRUCTOR(user_id, surname, specialization_id)
@@ -51,12 +51,27 @@ class UserRepository
         $query = $pdo->prepare("SELECT * FROM USERS WHERE email = :email");
         $query->bindValue(':email', $email);
         $query->execute();
-        $users = $query->fetch();
+        $user = $query->fetch();
 
-        if (!$users) {
+        if (!$user) {
             return null;
         }
 
-        return User::fromDB($users);
+        return User::fromDB($user);
+    }
+
+    public function getById(int $id): User|null
+    {
+        $pdo = DB::connection()->getPdo();
+        $query = $pdo->prepare("SELECT * FROM USERS WHERE id = :id");
+        $query->bindValue(':id', $id);
+        $query->execute();
+        $user = $query->fetch();
+
+        if (!$user) {
+            return null;
+        }
+
+        return User::fromDB($user);
     }
 }

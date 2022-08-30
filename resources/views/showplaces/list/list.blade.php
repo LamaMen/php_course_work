@@ -7,9 +7,9 @@
 
                     <div class="card-body">
                         <div class="card-title d-flex justify-content-between align-items-center">
-                            <a href="#" class="text"><b>{{ $showplace->title }}</b></a>
+                            <a href="/showplace/{{ $showplace->id }}" class="text"><b>{{ $showplace->title }}</b></a>
                             @if($showplace->rating > 0)
-                                <span class="badge rounded-pill bg-danger">★{{ $showplace->rating }}</span>
+                                <x-places.rating rating="{{ $showplace->rating }}"></x-places.rating>
                             @endif
                         </div>
                         <div style="height: 130px;">

@@ -19,12 +19,10 @@
 </header>
 
 <main>
-    <div class="mt-5">
-        {{ $slot }}
-    </div>
+    {{ $slot }}
 </main>
 
-<footer class="footer">
+<footer class="footer mt-auto text-center">
     <div class="container">
         <hr class="footer-divider">
         <p>&copy; 2022 GreatLuking</p>
