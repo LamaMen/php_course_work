@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Domain\Instructor;
 use App\Models\Domain\User;
 use Illuminate\Support\Facades\DB;
 use PDOException;
@@ -24,24 +25,25 @@ class UserRepository
             if (!$query->execute()) return null;
 
             $id = $db->lastInsertId();
-            if ($user->role == 'instructor') $this->addInstructor($id);
-
             $user->id = $id;
+
+            if ($user instanceof Instructor) $this->addInstructor($user);
             return $user;
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             return null;
         }
     }
 
-    private function addInstructor(int $userId): void
+    private function addInstructor(Instructor $instructor): void
     {
-        // TODO - add specialization and surname
         $db = DB::connection()->getPdo();
         $query = $db->prepare(
             "INSERT INTO INSTRUCTOR(user_id, surname, specialization_id)
-            VALUES (:userId, null, 1)"
+            VALUES (:userId, :surname, :specialization)"
         );
-        $query->bindValue(':userId', $userId);
+        $query->bindValue(':userId', $instructor->id);
+        $query->bindValue(':surname', $instructor->surname);
+        $query->bindValue(':specialization', $instructor->specializationId);
         $query->execute();
     }
 

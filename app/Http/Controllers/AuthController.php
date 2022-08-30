@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Domain\Instructor;
 use App\Models\Domain\User;
 use App\Repositories\UserRepository;
 use Illuminate\Contracts\Session\Session;
@@ -39,7 +40,9 @@ class AuthController extends Controller
 
     public function singUp(Request $request): RedirectResponse
     {
-        $user = User::fromForm($request->input());
+        $inp = $request->input();
+        $user = $inp['role'] == 'instructor' ? Instructor::fromForm($inp) : User::fromForm($inp);
+
         if (!$user->validatePassword()) {
             return back()->withErrors(['password' => 'true'])
                 ->withInput();

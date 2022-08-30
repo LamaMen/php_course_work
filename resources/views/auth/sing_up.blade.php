@@ -18,6 +18,14 @@
     <form action="/sing_up" method="post">
         @csrf
         <div class="form-floating">
+            <select class="form-select" id="role" name="role">
+                <option value="ordinary" @if(old('role') != 'instructor') selected @endif >Обычный</option>
+                <option value="instructor" @if(old('role') == 'instructor') selected @endif >Инструктор</option>
+            </select>
+            <label for="role">Выбирете роль</label>
+        </div>
+
+        <div class="form-floating">
             <input type="text" class="form-control top_input"
                    name="firstname" id="firstname"
                    placeholder="Name" value="{{ old('firstname') }}"
@@ -31,6 +39,16 @@
                    placeholder="Second Name" value="{{ old('lastname') }}"
                    required>
             <label for="lastname">Фамилия</label>
+        </div>
+
+        <div class="form-floating"
+             id="surname-field"
+             style="display:@if (old('role') == 'instructor') block @else none @endif;"
+        >
+            <input type="text" class="form-control center_input"
+                   name="surname" id="surname"
+                   placeholder="Surname" value="{{ old('surname') }}">
+            <label for="surname">Отчество</label>
         </div>
 
         <div class="form-floating">
@@ -50,23 +68,21 @@
             <label for="password">Пароль</label>
 
             <div class="invalid-feedback text-start mb-1">
-                Пароль должен состоять не менее чем из 4 символов и содержать как минимум одну заглавную букву и одну цифру.
+                Пароль должен состоять не менее чем из 4 символов и содержать как минимум одну заглавную букву и одну
+                цифру.
             </div>
         </div>
 
-        <div class="form-floating">
-            <select class="form-select" id="role" name="role">
-                <option value="ordinary" selected>Обычный</option>
-                <option value="instructor">Инструктор</option>
-            </select>
-            <label for="role">Выбирете роль</label>
-        </div>
+        <x-auth.specializations-field></x-auth.specializations-field>
 
         <button class="w-100 btn btn-primary btn-lg mt-3 mb-2" type="submit">Зарегистрироваться</button>
     </form>
 
     <a class="link-secondary" href="/sing_in">Вход</a>
 </main>
+
+
+<script src="{{ asset('js/sing_up.js') }}"></script>
 
 </body>
 </html>

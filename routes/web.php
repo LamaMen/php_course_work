@@ -5,7 +5,6 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExcursionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShowplacesController;
-use App\Http\Controllers\TestRestController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,5 +28,3 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/comments/create', [CommentController::class, 'create']);
 });
-
-Route::apiResource('/api/test', TestRestController::class);
