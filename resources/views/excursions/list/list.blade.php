@@ -13,7 +13,7 @@
                                 <x-places.rating rating="{{ $excursion->rating }}"></x-places.rating>
                             @endif
                         </div>
-                        <div style="height: 130px;">
+                        <div style="min-height: 130px;">
                             <p class="card-text">
                                 @if (strlen($excursion->description) < 150)
                                     {{ $excursion->description}}

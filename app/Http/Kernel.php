@@ -2,7 +2,10 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminRequired;
 use App\Http\Middleware\AuthRequired;
+use App\Http\Middleware\InstructorRequired;
+use App\Http\Middleware\UserRequired;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -48,5 +51,8 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => AuthRequired::class,
+        'user' => UserRequired::class,
+        'instructor' => InstructorRequired::class,
+        'admin' => AdminRequired::class,
     ];
 }

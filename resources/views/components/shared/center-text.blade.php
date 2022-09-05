@@ -16,12 +16,7 @@
         <x-shared.navbar current="{{ $page }}"></x-shared.navbar>
     </header>
 
-    <main>
-        <h1>{{ $description }}</h1>
-        <p class="lead pt-2">
-            <a href="/" class="btn btn-lg btn-primary fw-bold">На главную</a>
-        </p>
-    </main>
+    <main>{{ $slot }}</main>
 
     <footer class="footer ">
         <div class="container">

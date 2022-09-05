@@ -6,21 +6,19 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class NotFound extends Component
+class CenterText extends Component
 {
     public int $page;
     public string $title;
-    public string $description;
 
-    public function __construct(int $page, string $title, string $description)
+    public function __construct(string $title, int $page = -1)
     {
-        $this->page = $page ?? -1;
+        $this->page = $page;
         $this->title = $title;
-        $this->description = $description;
     }
 
     public function render(): View|Closure|string
     {
-        return view('components.shared.not-found');
+        return view('components.shared.center-text');
     }
 }

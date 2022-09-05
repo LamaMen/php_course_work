@@ -23,7 +23,9 @@
                 @endif
                 <div class="row py-3">
                     <div class="col lead parameter-name">Автор:</div>
-                    <div class="col lead">{{ $showplace->owner->fullName() ?? 'Неизвестен' }}</div>
+                    <a class="col lead" href="/user/{{ $showplace->owner->id ?? -1}}">
+                        {{ $showplace->owner->fullName() ?? 'Неизвестен' }}
+                    </a>
                 </div>
                 <div class="row py-3">
                     <div class="col lead parameter-name">Адрес:</div>

@@ -17,7 +17,7 @@ class Layout extends Component
      *
      * @return void
      */
-    public function __construct(int $pageIndex, string $title)
+    public function __construct(string $title, int $pageIndex = -1)
     {
         $this->pageIndex = $pageIndex;
         $this->title = $title;

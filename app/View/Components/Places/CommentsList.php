@@ -11,6 +11,8 @@ class CommentsList extends Component
 {
     public array $comments;
     public int $placeId;
+    public bool $isUser;
+
     private CommentRepository $commentRepository;
 
     public function __construct(int $placeId, CommentRepository $commentRepository)
@@ -21,6 +23,8 @@ class CommentsList extends Component
 
     public function render(): View|Closure|string
     {
+        $user = session()->get('user');
+        $this->isUser = $user->role == 'ordinary';
         $this->comments = $this->commentRepository->getCommentsByPlace($this->placeId);
         return view('components.places.comments-list');
     }

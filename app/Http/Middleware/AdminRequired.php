@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-class AuthRequired
+class AdminRequired
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,15 @@ class AuthRequired
      */
     public function handle(Request $request, Closure $next): Response|RedirectResponse
     {
-        if (!session()->has('user')) {
-            $request->session()->put('lastPath', $request->path());
+
+        try {
+            $user = session()->get('user');
+            if ($user->role != 'admin') {
+                return redirect()->route('not-permitted');
+            }
+            return $next($request);
+        } catch (NotFoundExceptionInterface|ContainerExceptionInterface) {
             return redirect('sing_in');
         }
-        return $next($request);
     }
 }
