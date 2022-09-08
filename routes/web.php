@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShowplacesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 
 Route::get('/', HomeController::class)->name('home');
@@ -29,7 +30,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/comments/create', [CommentController::class, 'create']);
 
+    Route::get('/user', function (Request $request) {
+        $userId = $request->cookie('user_id');
+        return redirect('/user/' . $userId);
+    });
     Route::get('/user/{id}', [UserController::class, 'user']);
+    Route::get('/user/edit/{id}', [UserController::class, 'edit']);
+    Route::post('/user/edit/apply', [UserController::class, 'applyChanges']);
 });
 
 Route::middleware(['user'])->group(function () {

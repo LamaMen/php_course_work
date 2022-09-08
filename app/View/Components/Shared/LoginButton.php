@@ -13,7 +13,6 @@ class LoginButton extends Component
 {
     public User|null $user;
 
-
     /**
      * Get the view / contents that represent the component.
      *

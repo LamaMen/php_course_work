@@ -22,4 +22,19 @@ class SpecializationsRepository
             return Specialization::fromDB($specialization);
         }, $specializations);
     }
+
+    public function getSpecializationById(int $id): Specialization|null
+    {
+        $pdo = DB::connection()->getPdo();
+        $query = $pdo->prepare("SELECT * FROM SPECIALIZATION WHERE id = :id");
+        $query->bindValue(':id', $id);
+        $query->execute();
+        $specialization = $query->fetch();
+
+        if (!$specialization) {
+            return null;
+        }
+
+        return Specialization::fromDB($specialization);
+    }
 }

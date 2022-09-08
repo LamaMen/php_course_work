@@ -10,13 +10,15 @@ class User
     public string $email;
     public string $password;
     public string $role;
+    public string $photo;
 
-    function __construct(int    $id,
-                         string $firstname,
-                         string $lastname,
-                         string $email,
-                         string $password,
-                         string $role)
+    function __construct(int         $id,
+                         string      $firstname,
+                         string      $lastname,
+                         string      $email,
+                         string      $password,
+                         string      $role,
+                         string|null $photo)
     {
         $this->id = $id;
         $this->firstname = $firstname;
@@ -24,6 +26,7 @@ class User
         $this->email = $email;
         $this->password = $password;
         $this->role = $role;
+        $this->photo = $photo ?? 'https://cdn.dribbble.com/users/304574/screenshots/6222816/male-user-placeholder.png?compress=1&resize=800x600&vertical=top';
     }
 
     public static function onlyId(int $id): User
@@ -34,11 +37,12 @@ class User
             '',
             '',
             '',
-            ''
+            '',
+            null
         );
     }
 
-    public static function fromForm(mixed $form): User
+    public static function fromForm(mixed $form, string|null $photo = null): User
     {
         return new self(
             $form['id'] ?? 0,
@@ -46,7 +50,8 @@ class User
             $form['lastname'],
             $form['email'],
             $form['password'],
-            $form['role']
+            $form['role'],
+            $photo,
         );
     }
 
@@ -58,7 +63,8 @@ class User
             $resultRow['second_name'],
             $resultRow['email'],
             $resultRow['passwd'],
-            $resultRow['u_role']
+            $resultRow['u_role'],
+            $resultRow['photo'],
         );
     }
 

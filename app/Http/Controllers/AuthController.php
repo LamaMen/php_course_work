@@ -8,6 +8,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Cookie;
 
 
 class AuthController extends Controller
@@ -34,7 +35,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
         $request->session()->put('user', $user);
-        return $this->redirectBack();
+        return $this->redirectBack()->withCookie('user_id', $user->id);
     }
 
     public function singUp(Request $request): RedirectResponse
@@ -55,7 +56,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
         $request->session()->put('user', $userWithId);
-        return $this->redirectBack();
+        return $this->redirectBack()->withCookie('user_id', $user->id);
     }
 
     public function logout(Request $request): RedirectResponse
@@ -66,7 +67,7 @@ class AuthController extends Controller
             $session->regenerate();
         }
 
-        return redirect()->route('home');
+        return redirect()->route('home')->withoutCookie('user_id');
     }
 
     private function redirectBack(): RedirectResponse

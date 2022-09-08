@@ -11,7 +11,7 @@
         <ul class="dropdown-menu dropdown-menu-lg-end">
             <li>
                 <a class="dropdown-item"
-                   href="/user/{{ $user->id }}">
+                   href="/user">
                     <img class="me-1" width="16" height="16" src="{{ asset('assets/icons/person-circle.svg') }}"
                          alt="">
                     Профиль
