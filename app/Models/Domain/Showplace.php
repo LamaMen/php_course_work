@@ -6,20 +6,19 @@ class Showplace extends Place
 {
     public string $address;
 
-    function __construct(int       $id,
-                         int       $placeId,
-                         string    $title,
-                         string    $description,
-                         float     $rating,
-                         string    $address,
-                         string    $photo,
-                         User|null $owner)
+    function __construct(int    $id,
+                         int    $placeId,
+                         string $title,
+                         string $description,
+                         float  $rating,
+                         string $address,
+                         string $photo)
     {
         $this->address = $address;
-        parent::__construct($id, $placeId, $title, $description, $rating, $photo, $owner);
+        parent::__construct($id, $placeId, $title, $description, $rating, $photo);
     }
 
-    static function fromDB(mixed $resultRow, User|null $owner): Showplace
+    static function fromDB(mixed $resultRow): Showplace
     {
         return new self(
             $resultRow['id'],
@@ -28,8 +27,7 @@ class Showplace extends Place
             $resultRow['description'],
             $resultRow['rating'],
             $resultRow['address'],
-            $resultRow['photo'],
-            $owner,
+            $resultRow['photo']
         );
     }
 }

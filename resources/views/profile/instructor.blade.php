@@ -45,7 +45,8 @@
                     <div class="col-3 lead parameter-name">Специализация:</div>
                     <div class="col-9 lead">
                         @if($instructor->specializationId != null)
-                            <x-user.specialization-view id="{{ $instructor->specializationId }}"></x-user.specialization-view>
+                            <x-user.specialization-view
+                                id="{{ $instructor->specializationId }}"></x-user.specialization-view>
                         @else
                             Не указана
                         @endif
@@ -55,7 +56,6 @@
             </div>
         </div>
 
-
-        <h1>Мои предложения</h1>
+        <x-user.excursions-list instructor-id="{{ $instructor->instructorId }}"></x-user.excursions-list>
     </div>
 </x-layout>

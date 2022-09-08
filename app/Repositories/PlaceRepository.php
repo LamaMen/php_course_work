@@ -8,13 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class PlaceRepository
 {
-    private UserRepository $repository;
-
-    function __construct(UserRepository $repository)
-    {
-        $this->repository = $repository;
-    }
-
     public function getShowplacesCount(): int
     {
         $pdo = DB::connection()->getPdo();
@@ -47,11 +40,9 @@ class PlaceRepository
                     p.description as description,
                     get_place_rating(p.id) as rating,
                     s.address as address,
-                    i.photo as photo,
-                    p.owner_id as owner_id
+                    p.photo as photo
                     FROM SHOWPLACE s
                         INNER JOIN PLACE p on s.place_id = p.id
-                        INNER JOIN PLACE_IMAGE i on p.id = i.place_id
                     ORDER BY rating DESC
                     LIMIT :from, :limit");
 
@@ -64,8 +55,7 @@ class PlaceRepository
         }
 
         return array_map(function ($place) {
-            $owner = $this->repository->getById($place['owner_id']);
-            return Showplace::fromDB($place, $owner);
+            return Showplace::fromDB($place);
         }, $places);
     }
 
@@ -81,11 +71,9 @@ class PlaceRepository
                     e.price as price,
                     e.duration as duration,
                     get_place_rating(p.id) as rating,
-                    i.photo as photo,
-                    p.owner_id as owner_id
+                    p.photo as photo
                     FROM EXCURSION e
                         INNER JOIN PLACE p on e.place_id = p.id
-                        LEFT JOIN PLACE_IMAGE i on p.id = i.place_id
                     ORDER BY rating DESC
                     LIMIT :from, :limit");
 
@@ -99,8 +87,38 @@ class PlaceRepository
         }
 
         return array_map(function ($place) {
-            $owner = $this->repository->getById($place['owner_id']);
-            return Excursion::fromDB($place, $owner);
+            return Excursion::fromDB($place);
+        }, $places);
+    }
+
+    public function getExcursionsByInstructor(int $instructorId): array
+    {
+        $pdo = DB::connection()->getPdo();
+        $query = $pdo->prepare(
+            "SELECT e.id as id,
+                    p.id as place_id,
+                    p.title as title,
+                    p.description as description,
+                    e.address as address,
+                    e.price as price,
+                    e.duration as duration,
+                    get_place_rating(p.id) as rating,
+                    p.photo as photo
+                    FROM EXCURSION e
+                        INNER JOIN PLACE p on e.place_id = p.id
+                        INNER JOIN EXCURSION_INSTRUCTOR i on e.id = i.excursion_id
+                    WHERE i.instructor_id = :instructorId");
+
+        $query->bindValue(':instructorId', $instructorId);
+        $query->execute();
+        $places = $query->fetchAll();
+
+        if (!$places) {
+            return array();
+        }
+
+        return array_map(function ($place) {
+            return Excursion::fromDB($place);
         }, $places);
     }
 
@@ -116,11 +134,9 @@ class PlaceRepository
                     e.price as price,
                     e.duration as duration,
                     get_place_rating(p.id) as rating,
-                    i.photo as photo,
-                    p.owner_id as owner_id
+                    p.photo as photo
                     FROM EXCURSION e
                         INNER JOIN PLACE p on e.place_id = p.id
-                        LEFT JOIN PLACE_IMAGE i on p.id = i.place_id
                     WHERE e.id = :id");
 
         $query->bindValue(':id', $id);
@@ -131,8 +147,7 @@ class PlaceRepository
             return null;
         }
 
-        $owner = $this->repository->getById($place['owner_id']);
-        return Excursion::fromDB($place, $owner);
+        return Excursion::fromDB($place);
     }
 
     public function getShowplace(int $id): Showplace|null
@@ -145,11 +160,9 @@ class PlaceRepository
                     p.description as description,
                     s.address as address,
                     get_place_rating(p.id) as rating,
-                    i.photo as photo,
-                    p.owner_id as owner_id
+                    p.photo as photo
                     FROM SHOWPLACE s
                         INNER JOIN PLACE p on s.place_id = p.id
-                        LEFT JOIN PLACE_IMAGE i on p.id = i.place_id
                     WHERE s.id = :id");
 
         $query->bindValue(':id', $id);
@@ -160,8 +173,7 @@ class PlaceRepository
             return null;
         }
 
-        $owner = $this->repository->getById($place['owner_id']);
-        return Showplace::fromDB($place, $owner);
+        return Showplace::fromDB($place);
     }
 
     private function getFromIndex(int $count, int $page): int

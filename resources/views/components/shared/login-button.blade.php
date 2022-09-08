@@ -20,7 +20,7 @@
 
             @if($user->role == 'instructor')
                 <li>
-                    <a class="dropdown-item" href="/places">
+                    <a class="dropdown-item" href="/groups">
                         <img class="me-1" width="16" height="16" src="{{ asset('assets/icons/map.svg') }}" alt="">
                         Мои экскурсии
                     </a>

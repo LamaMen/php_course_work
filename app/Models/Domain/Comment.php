@@ -2,7 +2,6 @@
 
 namespace App\Models\Domain;
 
-// TODO - must contain only user id and get name from component
 class Comment
 {
     public int $id;

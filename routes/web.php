@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExcursionController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InstructorGroupsController;
 use App\Http\Controllers\ShowplacesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -20,8 +21,6 @@ Route::post('/sing_up', [AuthController::class, 'singUp']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::view('/places', 'places.places');
-
     Route::get('/excursions/{page?}', [ExcursionController::class, 'allExcursions']);
     Route::get('/excursion/{id}', [ExcursionController::class, 'excursion']);
 
@@ -44,7 +43,8 @@ Route::middleware(['user'])->group(function () {
 });
 
 Route::middleware(['instructor'])->group(function () {
-    Route::view('/places', 'place.places');
+    Route::get('/groups', [InstructorGroupsController::class, 'groups']);
+    Route::post('/groups/create', [InstructorGroupsController::class, 'create']);
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {

@@ -13,23 +13,20 @@
 
 
             <div class="col-4">
-                @if ($excursion->rating != 0)
-                    <div class="row py-3">
-                        <div class="col lead parameter-name">Рейтинг:</div>
-                        <div class="col lead">
+                <div class="row py-3">
+                    <div class="col lead parameter-name">Рейтинг:</div>
+                    <div class="col lead">
+
+                        @if ($excursion->rating != 0)
                             <x-places.rating rating="{{ $excursion->rating }}"></x-places.rating>
-                        </div>
+                        @else
+                            Нет оценок
+                        @endif
                     </div>
-                @endif
+                </div>
                 <div class="row py-3">
                     <div class="col lead parameter-name">Длительность:</div>
                     <div class="col lead">{{ $excursion->getDuration(true) }}</div>
-                </div>
-                <div class="row py-3">
-                    <div class="col lead parameter-name">Автор:</div>
-                    <a class="col lead" href="/user/{{ $excursion->owner->id ?? -1}}">
-                        {{ $excursion->owner->fullName() ?? 'Неизвестен' }}
-                    </a>
                 </div>
                 <div class="row py-3">
                     <div class="col lead parameter-name">Адрес:</div>
@@ -45,6 +42,9 @@
         <p class="lead pt-4">
             {{ $excursion->description }}
         </p>
+
+
+        <x-places.instructors-list placeId="{{ $excursion->id }}"></x-places.instructors-list>
 
 
         <x-places.comments-list placeId="{{ $excursion->placeId }}"></x-places.comments-list>

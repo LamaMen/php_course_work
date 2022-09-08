@@ -13,20 +13,17 @@
 
 
             <div class="col-4">
-                @if ($showplace->rating != 0)
-                    <div class="row py-3">
-                        <div class="col lead parameter-name">Рейтинг:</div>
-                        <div class="col lead">
-                            <x-places.rating rating="{{ $showplace->rating }}"></x-places.rating>
-                        </div>
-                    </div>
-                @endif
                 <div class="row py-3">
-                    <div class="col lead parameter-name">Автор:</div>
-                    <a class="col lead" href="/user/{{ $showplace->owner->id ?? -1}}">
-                        {{ $showplace->owner->fullName() ?? 'Неизвестен' }}
-                    </a>
+                    <div class="col lead parameter-name">Рейтинг:</div>
+                    <div class="col lead">
+                        @if ($showplace->rating != 0)
+                            <x-places.rating rating="{{ $showplace->rating }}"></x-places.rating>
+                        @else
+                            Нет оценок
+                        @endif
+                    </div>
                 </div>
+
                 <div class="row py-3">
                     <div class="col lead parameter-name">Адрес:</div>
                     <div class="col lead">{{ $showplace->address }}</div>

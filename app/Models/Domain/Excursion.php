@@ -18,13 +18,12 @@ class Excursion extends Place
                          int         $price,
                          string      $duration,
                          float       $rating,
-                         string|null $photo,
-                         User|null        $owner)
+                         string|null $photo)
     {
         $this->address = $address;
         $this->price = $price;
         $this->duration = DateTime::createFromFormat('H:i:s', $duration);
-        parent::__construct($id, $placeId, $title, $description, $rating, $photo, $owner);
+        parent::__construct($id, $placeId, $title, $description, $rating, $photo);
     }
 
     public function getDuration(bool $isFull = false): string
@@ -62,7 +61,7 @@ class Excursion extends Place
         return $thirdVersion;
     }
 
-    static function fromDB(mixed $resultRow, User|null $owner): Excursion
+    static function fromDB(mixed $resultRow): Excursion
     {
         return new self(
             $resultRow['id'],
@@ -74,7 +73,6 @@ class Excursion extends Place
             $resultRow['duration'],
             $resultRow['rating'],
             $resultRow['photo'],
-            $owner,
         );
     }
 }
