@@ -65,43 +65,68 @@
 
         @foreach($excursions as $excursion)
 
-            <div class="card mb-3">
+            <div class="card mb-3" style="height: 300px; overflow: hidden">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="{{ $excursion->excursion->photo }}" class="img-fluid rounded-start" alt="...">
+                        <img src="{{ $excursion->excursion->photo }}" class="img-fluid rounded-start"
+                             style="object-fit: cover" alt="...">
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
-                            <a href="/excursion/{{ $excursion->excursion->id }}"
-                               class="card-title h4">{{ $excursion->excursion->title }}</a>
+                        <div class="card-body" style="height: 300px">
+                            <div class="d-flex flex-column justify-content-between align-items-start h-100">
+                                <a href="/excursion/{{ $excursion->excursion->id }}"
+                                   class="card-title h4">{{ $excursion->excursion->title }}</a>
 
-
-                            @if( count($excursion->groups) > 0)
-                                <p class="card-text lead text-muted mt-2">Группы:</p>
-                                <table class="table table-bordered">
-                                    <tr>
-                                        <th>Вместительность</th>
-                                        <th>Дата</th>
-                                        <th>Время</th>
-                                    </tr>
-
-                                    @foreach($excursion->groups as $group)
-                                        <tr>
-                                            <td>{{ $group->engaged}}
-                                                / {{ $group->capacity }}</td>
-                                            <td>{{ $group->date() }}</td>
-                                            <td>{{ $group->time() }}</td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                            @else
-                                <p class="card-text lead text-muted mt-2">Группы не добавены</p>
-                            @endif
+                                <button type="button"
+                                        class="btn btn-primary  @if(count($excursion->groups) == 0) disabled @endif"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#excursionGroup{{ $excursion->excursion->id }}">
+                                    Посмотреть группы
+                                </button>
+                            </div>
 
                         </div>
                     </div>
                 </div>
             </div>
+            @if( count($excursion->groups) > 0)
+                <div class="modal fade" id="excursionGroup{{ $excursion->excursion->id }}"
+                     data-bs-backdrop="static"
+                     data-bs-keyboard="false" tabindex="-1"
+                     aria-labelledby="excursionGroupLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content px-3">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="excursionGroupLabel">Доступные группы</h5>
+                            </div>
+
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>Вместительность</th>
+                                    <th>Дата</th>
+                                    <th>Время</th>
+                                </tr>
+
+                                @foreach($excursion->groups as $group)
+                                    <tr>
+                                        <td>{{ $group->engaged}}
+                                            / {{ $group->capacity }}</td>
+                                        <td>{{ $group->date() }}</td>
+                                        <td>{{ $group->time() }}</td>
+                                    </tr>
+                                @endforeach
+                            </table>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Закрыть
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         @endforeach
     </div>
 </x-layout>

@@ -38,11 +38,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/edit/apply', [UserController::class, 'applyChanges']);
 });
 
-Route::middleware(['user'])->group(function () {
+Route::middleware(['auth', 'user'])->group(function () {
     Route::view('/orders', 'orders.order');
 });
 
-Route::middleware(['instructor'])->group(function () {
+Route::middleware(['auth', 'instructor'])->group(function () {
     Route::get('/groups', [InstructorGroupsController::class, 'groups']);
     Route::post('/groups/create', [InstructorGroupsController::class, 'create']);
 });

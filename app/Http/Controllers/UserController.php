@@ -26,8 +26,7 @@ class UserController extends Controller
     public function user(int $id): View|RedirectResponse
     {
         $user = $this->userRepository->getById($id);
-        if ($user == null) {
-
+        if ($user == null || $user->role == 'admin') {
             return view('profile.not-found');
         }
 
@@ -65,7 +64,7 @@ class UserController extends Controller
 
         if ($file != null) {
             $filename = date('YmdHi') . $file->getClientOriginalName();
-            // For Prod, KOSTILLLL
+            // TODO - test with symlinks
             // substr(public_path(''), 0, -12) . '/public_html/images/users'
             $file->move(public_path('images/users'), $filename);
             $path = '/images/users/' . $filename;

@@ -22,15 +22,14 @@
                 <li>
                     <a class="dropdown-item" href="/groups">
                         <img class="me-1" width="16" height="16" src="{{ asset('assets/icons/map.svg') }}" alt="">
-                        Мои экскурсии
+                        Мои группы
                     </a>
                 </li>
-            @elseif($user->role == 'ordinary')
+            @else
                 <li>
                     <a class="dropdown-item" href="/orders">
                         <img class="me-1" width="16" height="16" src="{{ asset('assets/icons/basket2.svg') }}" alt="">
-                        Мои заказы
-                        <span class="badge rounded-pill bg-danger shopping-card-badge">+1</span>
+                        Мои экскурсии
                     </a>
                 </li>
             @endif
