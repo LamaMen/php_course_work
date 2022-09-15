@@ -38,6 +38,11 @@ class Group
         return date_format($this->dateTime, 'H:i');
     }
 
+    public function capacity(): string
+    {
+        return $this->engaged . ' / ' . $this->capacity;
+    }
+
     static function fromForm(mixed $form, int $instructorId): Group
     {
         return new self(

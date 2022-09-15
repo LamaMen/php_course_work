@@ -39,5 +39,8 @@
 
 
         <h1>Я поситил</h1>
+        <div class="pt-3">
+            @include('excursions.list.list', ['excursions' => $excursions])
+        </div>
     </div>
 </x-layout>

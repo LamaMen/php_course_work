@@ -36,6 +36,8 @@
                     <div class="col h1">Цена</div>
                     <div class="col h1">{{ $excursion->price }}</div>
                 </div>
+
+                <x-places.buy-button excursionId="{{ $excursion->id }}"></x-places.buy-button>
             </div>
         </div>
 

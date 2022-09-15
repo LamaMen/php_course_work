@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExcursionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InstructorGroupsController;
+use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ShowplacesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -39,7 +40,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth', 'user'])->group(function () {
-    Route::view('/orders', 'orders.order');
+    Route::get('/orders', [OrdersController::class, 'byUser']);
+    Route::post('/orders/create', [OrdersController::class, 'create']);
 });
 
 Route::middleware(['auth', 'instructor'])->group(function () {

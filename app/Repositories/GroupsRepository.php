@@ -3,10 +3,19 @@
 namespace App\Repositories;
 
 use App\Models\Domain\Group;
+use App\Models\VewModels\GroupWithInstructor;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
 class GroupsRepository
 {
+    private InstructorRepository $instructorRepository;
+
+    function __construct(InstructorRepository $instructorRepository)
+    {
+        $this->instructorRepository = $instructorRepository;
+    }
+
     public function getGroupsByInstructor(int $instructorId): array
     {
         $pdo = DB::connection()->getPdo();
@@ -25,6 +34,34 @@ class GroupsRepository
 
         return array_map(function ($group) {
             return Group::fromDB($group);
+        }, $groups);
+    }
+
+    public function getGroupsByExcursion(int $excursionId): array
+    {
+        $pdo = DB::connection()->getPdo();
+        $query = $pdo->prepare(
+            "SELECT *
+                    FROM GROUPS_INFO
+                    WHERE excursion_id = :excursion_id
+                      AND date > NOW()
+                      AND users < capacity
+                      AND id not in (SELECT group_id FROM EXCURSION_ORDER WHERE user_id = :user_id)
+                    ORDER BY date");
+
+        $query->bindValue(':excursion_id', $excursionId);
+        $query->bindValue(':user_id', Cookie::get('user_id'));
+
+        $query->execute();
+        $groups = $query->fetchAll();
+        if (!$groups) {
+            return array();
+        }
+
+        return array_map(function ($groupDto) {
+            $group = Group::fromDB($groupDto);
+            $instructor = $this->instructorRepository->getByNativeId($group->instructorId);
+            return new GroupWithInstructor($group, $instructor);
         }, $groups);
     }
 

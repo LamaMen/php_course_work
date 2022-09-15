@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Domain\Instructor;
 use App\Models\Domain\User;
 use App\Repositories\InstructorRepository;
+use App\Repositories\OrdersRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -16,11 +17,13 @@ class UserController extends Controller
 {
     private UserRepository $userRepository;
     private InstructorRepository $instructorRepository;
+    private OrdersRepository $ordersRepository;
 
-    function __construct(UserRepository $userRepository, InstructorRepository $instructorRepository)
+    function __construct(UserRepository $userRepository, InstructorRepository $instructorRepository, OrdersRepository $ordersRepository)
     {
         $this->userRepository = $userRepository;
         $this->instructorRepository = $instructorRepository;
+        $this->ordersRepository = $ordersRepository;
     }
 
     public function user(int $id): View|RedirectResponse
@@ -35,7 +38,8 @@ class UserController extends Controller
             return view('profile.instructor', ['instructor' => $instructor]);
         }
 
-        return view('profile.user', ['user' => $user]);
+        $excursions = $this->ordersRepository->getExcursionsUniq($user->id);
+        return view('profile.user', ['user' => $user, 'excursions' => $excursions]);
     }
 
     public function edit(int $id): View|RedirectResponse
