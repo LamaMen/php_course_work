@@ -12,7 +12,7 @@
             <li>
                 <a class="dropdown-item"
                    href="/user">
-                    <img class="me-1" width="16" height="16" src="{{ asset('assets/icons/person-circle.svg') }}"
+                    <img class="me-1" width="16" height="16" src="/assets/icons/person-circle.svg"
                          alt="">
                     Профиль
                 </a>
@@ -21,14 +21,14 @@
             @if($user->role == 'instructor')
                 <li>
                     <a class="dropdown-item" href="/groups">
-                        <img class="me-1" width="16" height="16" src="{{ asset('assets/icons/map.svg') }}" alt="">
+                        <img class="me-1" width="16" height="16" src="/assets/icons/map.svg" alt="">
                         Мои группы
                     </a>
                 </li>
             @else
                 <li>
                     <a class="dropdown-item" href="/orders">
-                        <img class="me-1" width="16" height="16" src="{{ asset('assets/icons/basket2.svg') }}" alt="">
+                        <img class="me-1" width="16" height="16" src="/assets/icons/basket2.svg" alt="">
                         Мои экскурсии
                     </a>
                 </li>
@@ -36,7 +36,7 @@
 
             <li>
                 <a class="dropdown-item" href="/logout">
-                    <img class="me-1" width="16" height="16" src="{{ asset('assets/icons/arrow-bar-left.svg') }}"
+                    <img class="me-1" width="16" height="16" src="/assets/icons/arrow-bar-left.svg"
                          alt="">
                     Выйти
                 </a>

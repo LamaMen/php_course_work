@@ -1,6 +1,6 @@
 <x-layout title="Редактирование инструктора">
     <x-slot name="styles">
-        <link href="{{ asset('css/place/place.css') }}" rel="stylesheet">
+        <link href="/css/place/place.css" rel="stylesheet">
     </x-slot>
 
     <div class="container">

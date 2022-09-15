@@ -6,7 +6,7 @@
 
             @if(session()->get('user')->id == $user->id)
                 <a class="btn" href="/user/edit/{{ $user->id }}">
-                    <img width="36" height="36" src="{{ asset('assets/icons/pencil-square.svg') }}" alt="">
+                    <img width="36" height="36" src="/assets/icons/pencil-square.svg" alt="">
                 </a>
             @endif
         </div>

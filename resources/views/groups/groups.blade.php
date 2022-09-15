@@ -5,7 +5,7 @@
 
             @if( count($excursions) > 0)
                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    <img width="36" height="36" src="{{ asset('assets/icons/plus-circle.svg') }}" alt="">
+                    <img width="36" height="36" src="/assets/icons/plus-circle.svg" alt="">
                 </button>
             @endif
 

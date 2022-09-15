@@ -6,14 +6,14 @@
     <meta name="author" content="Ilia Rodionov">
     <title>Вход</title>
 
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/auth.css') }}" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/auth.css" rel="stylesheet">
 
 </head>
 <body class="text-center">
 
 <main class="form-auth">
-    <a href="/"><img class="mb-2" src="{{ asset('assets/brand/logo.png') }}" alt="" width="90"></a>
+    <a href="/"><img class="mb-2" src="/assets/brand/logo.png" alt="" width="90"></a>
     <h1 class="h3 mb-4 fw-normal">Вход</h1>
 
     <form action="/sing_in" method="post">

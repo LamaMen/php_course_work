@@ -2,7 +2,7 @@
     <div class="container">
 
         <a class="navbar-brand" href="#">
-            <img class="me-3" src="{{ asset('assets/brand/logo.png') }}" alt="" width="35">
+            <img class="me-3" src="/assets/brand/logo.png" alt="" width="35">
             GreatLuking
         </a>
 

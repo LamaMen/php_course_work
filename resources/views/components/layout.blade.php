@@ -7,8 +7,8 @@
     <meta name="author" content="Ilia Rodionov">
     <title>{{ $title }}</title>
 
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/shared/layout.css') }}" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/shared/layout.css" rel="stylesheet">
     {{ $styles ?? '' }}
 
 </head>
@@ -29,7 +29,7 @@
     </div>
 </footer>
 
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="/js/app.js"></script>
 
 </body>
 </html>

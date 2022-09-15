@@ -1,6 +1,6 @@
 <x-layout pageIndex="2" title="{{ $excursion->title }}">
     <x-slot name="styles">
-        <link href="{{ asset('css/place/place.css') }}" rel="stylesheet">
+        <link href="/'css/place/place.css" rel="stylesheet">
     </x-slot>
 
     <div class="container">

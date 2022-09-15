@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SingUpMail;
 use App\Models\Domain\Instructor;
 use App\Models\Domain\User;
 use App\Repositories\UserRepository;
@@ -9,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 
 
 class AuthController extends Controller
@@ -35,6 +37,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
         $request->session()->put('user', $user);
+
         return $this->redirectBack()->withCookie('user_id', $user->id);
     }
 
@@ -56,6 +59,9 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
         $request->session()->put('user', $userWithId);
+
+        Mail::to($user->email)->send(new SingUpMail());
+
         return $this->redirectBack()->withCookie('user_id', $user->id);
     }
 

@@ -1,6 +1,6 @@
 <x-layout title="{{ $instructor->fullname() }}">
     <x-slot name="styles">
-        <link href="{{ asset('css/place/place.css') }}" rel="stylesheet">
+        <link href="/css/place/place.css" rel="stylesheet">
     </x-slot>
 
     <div class="container">
@@ -9,7 +9,7 @@
 
             @if(session()->get('user')->id == $instructor->id)
                 <a class="btn" href="/user/edit/{{ $instructor->id }}">
-                    <img width="36" height="36" src="{{ asset('assets/icons/pencil-square.svg') }}" alt="">
+                    <img width="36" height="36" src="/assets/icons/pencil-square.svg" alt="">
                 </a>
             @endif
         </div>

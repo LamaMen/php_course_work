@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 
+use App\Mail\NewManInGroupCreated;
+use App\Mail\OrderCreated;
 use App\Repositories\OrdersRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 
 class OrdersController extends Controller
 {
@@ -23,6 +26,9 @@ class OrdersController extends Controller
     {
         $inp = $request->input();
         $this->repository->create($inp['groupId']);
+
+        Mail::send(new NewManInGroupCreated($inp['groupId']));
+        Mail::send(new OrderCreated($inp['groupId']));
         return redirect('/orders');
     }
 
