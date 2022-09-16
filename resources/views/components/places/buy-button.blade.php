@@ -44,9 +44,9 @@
                                         </label>
                                     </td>
 
-                                    <td>{{ $group->group->capacity()}}</td>
                                     <td>{{ $group->group->date() }}</td>
                                     <td>{{ $group->group->time() }}</td>
+                                    <td>{{ $group->group->capacity()}}</td>
                                 </tr>
                             @endforeach
                         </table>

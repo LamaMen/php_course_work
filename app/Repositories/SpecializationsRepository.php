@@ -7,6 +7,24 @@ use Illuminate\Support\Facades\DB;
 
 class SpecializationsRepository
 {
+    public function create(string $name): void
+    {
+        $db = DB::connection()->getPdo();
+        $query = $db->prepare("INSERT INTO SPECIALIZATION(name) VALUES (:name)");
+        $query->bindValue(':name', $name);
+
+        if (!$query->execute()) return;
+    }
+
+    public function delete(int $id): void
+    {
+        $db = DB::connection()->getPdo();
+        $query = $db->prepare("DELETE FROM SPECIALIZATION WHERE id = :id");
+        $query->bindParam(':id', $id);
+
+        if (!$query->execute()) return;
+    }
+
     public function getSpecializations(): array
     {
         $pdo = DB::connection()->getPdo();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ExcursionController;
@@ -50,5 +51,11 @@ Route::middleware(['auth', 'instructor'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::view('/admin', 'admin.admin')->name('admin');
+    Route::get('/admin', [AdminController::class, 'statistic'])->name('admin');
+
+    Route::get('/admin/specializations', [AdminController::class, 'specializations']);
+    Route::post('/admin/specializations/create', [AdminController::class, 'createSpecialization']);
+    Route::post('/admin/specializations/delete', [AdminController::class, 'deleteSpecializations']);
+
+    Route::view('/admin/excursions', 'admin.excursions');
 });

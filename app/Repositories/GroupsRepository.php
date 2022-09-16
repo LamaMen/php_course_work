@@ -65,6 +65,28 @@ class GroupsRepository
         }, $groups);
     }
 
+    public function getAllGroupsWithInstructors(): array
+    {
+        $pdo = DB::connection()->getPdo();
+        $query = $pdo->prepare(
+            "SELECT *
+                    FROM GROUPS_INFO
+                    ORDER BY date");
+
+        $query->execute();
+        $groups = $query->fetchAll();
+
+        if (!$groups) {
+            return array();
+        }
+
+        return array_map(function ($groupDto) {
+            $group = Group::fromDB($groupDto);
+            $instructor = $this->instructorRepository->getByNativeId($group->instructorId);
+            return new GroupWithInstructor($group, $instructor);
+        }, $groups);
+    }
+
     public function save(Group $group): void
     {
         $db = DB::connection()->getPdo();

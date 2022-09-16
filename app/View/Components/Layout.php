@@ -12,22 +12,12 @@ class Layout extends Component
     public int $pageIndex;
     public string $title;
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
     public function __construct(string $title, int $pageIndex = -1)
     {
         $this->pageIndex = $pageIndex;
         $this->title = $title;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return Application|Factory|View
-     */
     public function render(): View|Factory|Application
     {
         return view('components.layout');
