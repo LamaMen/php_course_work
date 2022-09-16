@@ -285,7 +285,7 @@ class PlaceRepository
         }
     }
 
-    public function saveExcursion(Excursion $excursion): void
+    public function saveExcursion(Excursion $excursion): int|null
     {
         $db = DB::connection()->getPdo();
 
@@ -307,7 +307,7 @@ class PlaceRepository
         $query->bindValue(':description', $excursion->description);
         $query->bindValue(':photo', $excursion->photo);
 
-        if (!$query->execute()) return;
+        if (!$query->execute()) return null;
 
         if ($excursion->id == -1) {
             $id = $db->lastInsertId();
@@ -329,7 +329,8 @@ class PlaceRepository
         $query->bindValue(':duration', date_format($excursion->duration, 'H:i:s'));
         $query->bindValue(':price', $excursion->price);
 
-        if (!$query->execute()) return;
+        if (!$query->execute()) return null;
+        return $excursion->id == -1 ? $db->lastInsertId() : $excursion->id;
     }
 
     public function saveShowplace(Showplace $showplace): void

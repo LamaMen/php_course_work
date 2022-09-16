@@ -122,8 +122,8 @@ class AdminController extends Controller
         }
 
         $excursion = Excursion::fromForm($inp, $path);
-        $this->placeRepository->saveExcursion($excursion);
-        $this->placeRepository->updateExcursion($excursion->id, $inp['instructors']);
+        $id = $this->placeRepository->saveExcursion($excursion);
+        $this->placeRepository->updateExcursion($id, $inp['instructors']);
 
         return redirect('/admin/excursions');
     }
