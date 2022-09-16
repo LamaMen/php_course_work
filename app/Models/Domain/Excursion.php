@@ -11,19 +11,39 @@ class Excursion extends Place
     public int $price;
 
     function __construct(int         $id,
-                         int $placeId,
+                         int         $placeId,
                          string      $title,
                          string      $description,
                          string      $address,
                          int         $price,
-                         string      $duration,
+                         DateTime    $duration,
                          float       $rating,
                          string|null $photo)
     {
         $this->address = $address;
         $this->price = $price;
-        $this->duration = DateTime::createFromFormat('H:i:s', $duration);
+        $this->duration = $duration;
         parent::__construct($id, $placeId, $title, $description, $rating, $photo);
+    }
+
+    public static function empty(): Excursion
+    {
+        return new self(
+            -1,
+            -1,
+            '',
+            '',
+            '',
+            0,
+            DateTime::createFromFormat('H:i:s', '00:00:00'),
+            0,
+            null
+        );
+    }
+
+    public function duration(): string
+    {
+        return date_format($this->duration, 'H:i');
     }
 
     public function getDuration(bool $isFull = false): string
@@ -61,6 +81,21 @@ class Excursion extends Place
         return $thirdVersion;
     }
 
+    public static function fromForm(mixed $form, string|null $photo): Excursion
+    {
+        return new self(
+            $form['id'],
+            $form['place_id'],
+            $form['title'],
+            $form['description'],
+            $form['address'],
+            $form['price'],
+            DateTime::createFromFormat('H:i', $form['duration']),
+            0,
+            $photo,
+        );
+    }
+
     static function fromDB(mixed $resultRow): Excursion
     {
         return new self(
@@ -70,7 +105,7 @@ class Excursion extends Place
             $resultRow['description'],
             $resultRow['address'],
             $resultRow['price'],
-            $resultRow['duration'],
+            DateTime::createFromFormat('H:i:s', $resultRow['duration']),
             $resultRow['rating'],
             $resultRow['photo'],
         );

@@ -18,14 +18,14 @@ class Layout extends Component
     ];
 
 
-    public function __construct(int $current = 0)
+    public function __construct(string|null $title = null, int $current = 0)
     {
         $this->current = $current;
+        $this->title = $title != null ? $title : $this->routes[$this->current]['title'];
     }
 
     public function render(): View|string|Closure
     {
-        $this->title = $this->routes[$this->current]['title'];
         return view('components.admin.layout');
     }
 }

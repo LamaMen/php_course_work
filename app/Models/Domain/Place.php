@@ -34,7 +34,7 @@ class Place
             '',
             '',
             -1,
-            ''
+            null
         );
     }
 }

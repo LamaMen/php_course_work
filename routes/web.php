@@ -57,5 +57,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/specializations/create', [AdminController::class, 'createSpecialization']);
     Route::post('/admin/specializations/delete', [AdminController::class, 'deleteSpecializations']);
 
-    Route::view('/admin/excursions', 'admin.excursions');
+    Route::get('/admin/excursions', [AdminController::class, 'excursions']);
+    Route::get('/admin/edit/{id}', [AdminController::class, 'edit']);
+
+    Route::get('/admin/create/excursion', [AdminController::class, 'createExcursion']);
+    Route::post('/admin/excursion/save', [AdminController::class, 'saveExcursion']);
+
+    Route::get('/admin/create/showplace', [AdminController::class, 'createShowplace']);
+    Route::post('/admin/showplace/save', [AdminController::class, 'saveShowplace']);
 });
