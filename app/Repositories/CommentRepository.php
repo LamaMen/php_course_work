@@ -20,7 +20,7 @@ class CommentRepository
     public function getCommentsByPlace(int $placeId, bool $isNeedPlace = false): array
     {
         $pdo = DB::connection()->getPdo();
-        $query = $pdo->prepare("SELECT * FROM COMMENT WHERE place_id = :id");
+        $query = $pdo->prepare("SELECT * FROM COMMENT WHERE place_id = :id ORDER BY id desc");
 
         $query->bindValue(':id', $placeId);
         $query->execute();
@@ -56,7 +56,7 @@ class CommentRepository
 
             if (!$query->execute()) return;
 
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             return;
         }
     }
