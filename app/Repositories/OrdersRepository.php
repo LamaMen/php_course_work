@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Domain\Excursion;
 use App\Models\Domain\Group;
 use App\Models\VewModels\ExcursionGroup;
+use DateTime;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 
@@ -54,8 +55,8 @@ class OrdersRepository
 
         return array_map(function ($place) {
             $excursion = Excursion::fromDB($place);
-            $group = Group::fromDB($place);
-            return new ExcursionGroup($excursion, $group);
+            $date = DateTime::createFromFormat('Y-m-d H:i:s', $place['date']);
+            return new ExcursionGroup($excursion, $date);
         }, $places);
     }
 

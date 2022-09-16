@@ -9,17 +9,17 @@ use DateTime;
 class ExcursionGroup
 {
     public Excursion $excursion;
-    public Group $group;
+    public DateTime $dateTime;
 
     function __construct(Excursion $excursion,
-                         Group     $group)
+                         DateTime  $dateTime)
     {
         $this->excursion = $excursion;
-        $this->group = $group;
+        $this->dateTime = $dateTime;
     }
 
     public function date(): string
     {
-        return date_format($this->group->dateTime, 'd.m H:i');
+        return date_format($this->dateTime, 'd.m H:i');
     }
 }
